@@ -1,7 +1,6 @@
 require("dotenv").config();
 const Partner = require("../models/partner");
 
-// get img from ../img/
 const fs = require("fs");
 const path = require("path");
 const imgPath = path.join(__dirname, "../public/images/");
@@ -11,11 +10,7 @@ const createPartner = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const imgBase64 = fs
-      .readFileSync(imgPath + "test_img.png", {
-        encoding: "base64",
-      })
-      .toString();
+    const imgBase64 = process.env.TEST_IMG_BASE64;
     const newPartner = new Partner({
       name,
       description,
