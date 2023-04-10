@@ -58,6 +58,10 @@ const login = async (req, res) => {
   }
 };
 
+const info = async (req, res) => {
+  const user = req.user;
+}
+
 module.exports = {
   register,
   login,
