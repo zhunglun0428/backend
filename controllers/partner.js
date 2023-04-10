@@ -1,6 +1,10 @@
 require("dotenv").config();
 const Partner = require("../models/partner");
 
+const fs = require("fs");
+const path = require("path");
+const imgPath = path.join(__dirname, "../public/images/");
+
 const createPartner = async (req, res) => {
   const { name, description } = req.body;
   const userId = req.user._id;
