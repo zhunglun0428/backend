@@ -4,7 +4,7 @@ const Partner = require("../models/partner");
 // get img from ../img/
 const fs = require("fs");
 const path = require("path");
-const imgPath = path.join(__dirname, "../img/");
+const imgPath = path.join(__dirname, "../public/images/");
 
 const createPartner = async (req, res) => {
   const { name, description } = req.body;
