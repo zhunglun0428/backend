@@ -7,7 +7,9 @@ const cors = require("cors");
 
 var mongoose = require("mongoose");
 
-var userRouter = require("./routes/user");
+const userRouter = require("./routes/user");
+const chatRouter = require("./routes/chat");
+const partnerRouter = require("./routes/partner");
 
 var app = express();
 
@@ -37,6 +39,8 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/user", userRouter);
+app.use("/chat", chatRouter);
+app.use("/partner", partnerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
