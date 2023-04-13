@@ -17,9 +17,6 @@ const PartnerSchema = mongoose.Schema({
   imgBase64: {
     type: String,
   },
-  description: {
-    type: String,
-  },
 });
 
 PartnerSchema.pre("save", async function (next) {

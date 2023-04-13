@@ -7,7 +7,7 @@ const path = require("path");
 const imgPath = path.join(__dirname, "../public/images/");
 
 const createPartner = async (req, res) => {
-  const { name, description } = req.body;
+  const { name } = req.body;
   const userId = req.user._id;
 
   try {
@@ -18,7 +18,6 @@ const createPartner = async (req, res) => {
       .toString();
     const newPartner = new Partner({
       name,
-      description,
       imgBase64,
       userId,
     });
