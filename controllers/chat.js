@@ -1,4 +1,7 @@
 const Partner = require("../models/partner");
+const Chat = require("../models/chat");
+
+const { getReply } = require("../utils/openai");
 
 const getImgURL = async (req, res) => {
   const userId = req.user._id;
@@ -16,4 +19,46 @@ const getImgURL = async (req, res) => {
   }
 };
 
-module.exports = { getImgURL };
+const replyMessage = async (req, res) => {
+  const userId = req.user._id;
+  const { message } = req.body;
+
+  try {
+    // check chat is exist
+    let chat = await Chat.findOne({ userId: userId });
+    if (!chat) {
+      chat = new Chat({
+        userId: userId,
+      });
+      await chat.save();
+    }
+    // insert message
+    await chat.insertMessage("user", message);
+    // get reply
+    // only get less 10 messages
+    const reply = await getReply(chat.system, chat.messages.slice(-16));
+    // insert reply
+    await chat.insertMessage(reply.role, reply.content);
+
+    let script = {
+      type: "text",
+      input: reply.content,
+      ssml: true,
+      provider: {
+        type: "microsoft",
+        voice_id: "zh-TW-HsiaoChenNeural",
+      },
+    };
+
+    let config = {
+      stitch: true,
+    };
+
+    res.status(200).json({ script: script, config: config });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { getImgURL, replyMessage };
