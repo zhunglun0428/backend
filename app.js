@@ -26,17 +26,7 @@ app.use(cors());
 
 // mongoose
 mongoose.connect("mongodb://127.0.0.1:27017/cyberlove");
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-  console.log("connected to db");
-});
-
-app.use(async (req, res, next) => {
-  req.db = db;
-  next();
-});
+console.log("Connected to MongoDB");
 
 app.use("/user", userRouter);
 app.use("/chat", chatRouter);
