@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // mongoose
-mongoose.connect("mongodb://127.0.0.1:27017/cyberlove");
+mongoose.connect(process.env.MONGODB_URL);
 console.log("Connected to MongoDB");
 
 app.use("/user", userRouter);
