@@ -25,8 +25,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
 // mongoose
-mongoose.connect(process.env.MONGODB_URL);
-console.log("Connected to MongoDB");
+if(process.env.NODE_ENV !== "development") {
+  mongoose.connect(process.env.MONGODB_URL);
+  console.log("Connected to MongoDB");
+}
+
+
 
 app.use("/user", userRouter);
 app.use("/chat", chatRouter);
