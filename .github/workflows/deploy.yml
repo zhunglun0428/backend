@@ -5,9 +5,16 @@ on:
     branches:
     - main
 
+
 jobs:
+  test: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Test Workflow
+        uses: ./.github/workflows/test.yml
   deploy:
     runs-on: ubuntu-latest
+    needs: test
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
