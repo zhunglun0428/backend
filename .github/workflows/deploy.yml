@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    needs: CI
+    needs: test
     if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' && success() }}
     runs-on: ubuntu-latest
     steps:
