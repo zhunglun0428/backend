@@ -2,19 +2,21 @@ name: CD
 
 on:
   push:
-    branches: 
+    branches:
     - main
-    
-jobs: 
+
+jobs:
   deploy:
+    needs: CI
+    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' && success() }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      
+
     - name: Deploy to GCP
       uses: appleboy/ssh-action@v0.1.9
-      with: 
+      with:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
@@ -23,4 +25,4 @@ jobs:
             git pull
             npm ci
             pm2 restart backend
-            
+
