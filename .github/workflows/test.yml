@@ -1,20 +1,24 @@
-name: CI
+name: Node.js CI
 
 on:
   push:
-    branches:
-    - main
+    branches: [ "main" ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Install Dependencies
-      scripts: | 
-        cd backend
-        npm ci
-    - name: Run Tests
-      run: npm run test
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run test
