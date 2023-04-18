@@ -7,8 +7,6 @@ on:
 
 jobs:
   deploy:
-    needs: test
-    if: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' && success() }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
