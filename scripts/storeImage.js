@@ -36,13 +36,13 @@ const storeImage = async () => {
     glasses = [true, false];
     blockIndex = [14, 67, 307];
     // iterate through all images in the folder
-    fs.readdirSync(dirPath).forEach(async (file) => {
+    for (const file of fs.readdirSync(dirPath)) {
       let index = file.split("-")[0];
       index = Number(index);
       // skip the images in the blockIndex
       if (blockIndex.includes(index)) {
         bar.tick();
-        return;
+        continue;
       }
       const imgBase64 = fs.readFileSync(path.join(dirPath, file), "base64");
       // create a new image
@@ -57,11 +57,9 @@ const storeImage = async () => {
       // save the image
       await newImage.save();
       bar.tick();
-      if (bar.complete) {
-        console.log("All images stored in MongoDB");
-        process.exit(0);
-      }
-    });
+    }
+    console.log("All images stored in MongoDB");
+    process.exit(0);
   } catch (err) {
     console.log(err);
   }
