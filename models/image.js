@@ -32,18 +32,6 @@ const ImageSchema = mongoose.Schema({
   },
 });
 
-ImageSchema.pre("save", async function (next) {
-  // only generate imgURL if it is null
-  if (this.imgURL) return next();
-  // generate imgURL
-  this.imgURL = await uploadImg(this.imgBase64);
-  next();
-  try {
-  } catch (err) {
-    return next(err);
-  }
-});
-
 const Image = mongoose.model("Image", ImageSchema);
 
 module.exports = Image;
