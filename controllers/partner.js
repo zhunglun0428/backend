@@ -46,7 +46,7 @@ const generatePartnerImage = async (req, res) => {
     // random find 4 images in db
     let images = await Image.aggregate([
       { $match: query },
-      { $sample: { size: 4 } },
+      { $sample: { size: 6 } },
       { $project: { _id: 1, imgBase64: 1 } },
     ]);
     // change _id to imageId
