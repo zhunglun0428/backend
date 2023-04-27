@@ -3,13 +3,13 @@ require("dotenv").config();
 
 const request = require("supertest");
 const app = require("../app");
-var mongoose = require('mongoose');
-const User = require('../models/user');
+var mongoose = require("mongoose");
+const User = require("../models/user");
 
 const testUser = {
-  username: 'testUser',
-  password: 'testpassword',
-  email: 'testUser@example.com'
+  username: "testUser",
+  password: "testpassword",
+  email: "testUser@example.com"
 };
 
 global.jwtTokenForTest;
@@ -20,7 +20,7 @@ before(async () => {
   await User.findOneAndDelete({ username: testUser.username });
   await User.create(testUser);
 
-  // log in with the user's credentials to get a JWT token
+  // log in with the user"s credentials to get a JWT token
   const credentials_response = await request(app)
     .post("/user/login")
     .send({ username: testUser.username, password: testUser.password });

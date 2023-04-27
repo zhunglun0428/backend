@@ -6,12 +6,12 @@ const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const request = require("supertest");
 const app = require("../app");
-require('../scripts/test-setup');
+require("../scripts/test-setup");
 
 const testUser = {
-  username: 'testUser',
-  password: 'testpassword',
-  email: 'testUser@example.com'
+  username: "testUser",
+  password: "testpassword",
+  email: "testUser@example.com"
 };
 
 const usersForRegister = [
@@ -80,12 +80,12 @@ describe("POST /user/login", () => {
     });
   }
 
-  it('should return 200 and JWT on successful login', async () => {
+  it("should return 200 and JWT on successful login", async () => {
     const res = await request(app)
-      .post('/user/login')
+      .post("/user/login")
       .send({ username: testUser.username, password: testUser.password });
     expect(res.status).to.equal(200);
-    expect(res.body).to.have.property('authorization');
+    expect(res.body).to.have.property("authorization");
   });
 
 });

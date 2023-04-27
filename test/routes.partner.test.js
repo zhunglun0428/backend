@@ -6,7 +6,7 @@ const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const request = require("supertest");
 const app = require("../app");
-require('../scripts/test-setup');
+require("../scripts/test-setup");
 
 const usersForCreatePartner = {
   data: {
@@ -29,10 +29,10 @@ describe("POST /partner/create", () => {
 
 });
 
-describe('POST /partner/generateImage', () => {
-  it('should return an array of 4 images or less', async () => {
+describe("POST /partner/generateImage", () => {
+  it("should return an array of 4 images or less", async () => {
     const res = await request(app)
-      .post('/partner/generateImage')
+      .post("/partner/generateImage")
       .send({
         "origin": "Japanese",
         "hair": "straight"
