@@ -1,8 +1,9 @@
 process.env.NODE_ENV === "development";
+require("dotenv").config();
 
 const request = require("supertest");
 const app = require("../app");
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 const User = require('../models/user');
 
 const testUser = {
