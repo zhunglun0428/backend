@@ -6,7 +6,7 @@ const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const request = require("supertest");
 const app = require("../app");
-require("../scripts/test-setup");
+require("../utils/test-setup");
 
 const usersForCreatePartner = {
   data: {
