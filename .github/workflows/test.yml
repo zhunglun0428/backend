@@ -27,5 +27,6 @@ jobs:
         touch .env
         echo MONGODB_TEST_URL=${{ secrets.MONGODB_TEST_URL }} >> .env
         echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+        echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
     - run: npm ci
     - run: npm test

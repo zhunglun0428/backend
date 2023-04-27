@@ -2,44 +2,17 @@ process.env.NODE_ENV === "development";
 
 require("dotenv").config();
 
-
 const { describe, it } = require("mocha");
 const { expect } = require("chai");
 const request = require("supertest");
-const jwt = require("jsonwebtoken");
 const app = require("../app");
-const User = require('../models/user');
-var mongoose = require("mongoose");
+require("../scripts/test-setup");
 
 const testUser = {
-  username: 'testuser',
-  password: 'testpassword',
-  email: 'testuser@example.com'
+  username: "testUser",
+  password: "testpassword",
+  email: "testUser@example.com"
 };
-
-let testToken;
-
-before(async () => {
-  await mongoose.connect(process.env.MONGODB_TEST_URL);
-  await User.findOneAndDelete({ username: testUser.username });
-  await User.create(testUser);
-
-  testToken = jwt.sign(
-    {
-      username: testUser.username,
-      email: testUser.email,
-      _id: testUser._id,
-    },
-    process.env.JWT_SECRET
-  );
-});
-
-after(async () => {
-  await User.findOneAndDelete({ username: testUser.username });
-  await mongoose.connection.dropDatabase();
-  await mongoose.connection.close();
-  console.log("Closed to MongoDB for testing");
-});
 
 const usersForRegister = [
 {
@@ -78,7 +51,7 @@ describe("POST /user/register", () => {
 const usersForLogin = [
 {
     data:{
-      username: "wrongtestuser",
+      username: "wrongTestUser",
       password: "testpassword",
     },
     expectedStatus: 409,
@@ -86,7 +59,7 @@ const usersForLogin = [
 },
 {
     data:{
-      username: "testuser",
+      username: "testUser",
       password: "wrongtestpassword",
     },
     expectedStatus: 409,
@@ -107,13 +80,13 @@ describe("POST /user/login", () => {
     });
   }
 
-  it('should return 200 and JWT on successful login', async () => {
+  it("should return 200 and JWT on successful login", async () => {
     const res = await request(app)
-      .post('/user/login')
+      .post("/user/login")
       .send({ username: testUser.username, password: testUser.password });
     expect(res.status).to.equal(200);
-    expect(res.body).to.have.property('authorization');
-    testToken = res.body.authorization; // store JWT for later use
+    expect(res.body).to.have.property("authorization");
   });
 
 });
+
