@@ -17,6 +17,9 @@ const PartnerSchema = mongoose.Schema({
   imgBase64: {
     type: String,
   },
+  videoURL: {
+    type: String,
+  },
 });
 
 PartnerSchema.pre("save", async function (next) {
