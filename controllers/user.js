@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Partner = require("../models/partner");
 const Image = require("../models/image");
 
-const { createIdleVideo, getIdleVideoURL } = require("../utils/d-id");
+const { createIdleVideo } = require("../utils/d-id");
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -75,9 +75,8 @@ const choosePartner = async (req, res) => {
     });
     await newPartner.save();
     const image = await Image.findById(imageId);
-    if (!image.videoURL) {
-      const videoId = await createIdleVideo(image.imgURL);
-      image.videoURL = await getIdleVideoURL(videoId);
+    if (!image.videoId) {
+      image.videoId = await createIdleVideo(image.imgURL);
       await image.save();
     }
     res.status(201).json({ message: "Partner created" });

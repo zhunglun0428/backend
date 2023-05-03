@@ -8,6 +8,9 @@ const ImageSchema = mongoose.Schema({
   imgURL: {
     type: String,
   },
+  videoId: {
+    type: String,
+  },
   videoURL: {
     type: String,
   },

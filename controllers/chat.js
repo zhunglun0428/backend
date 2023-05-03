@@ -1,7 +1,9 @@
 const Partner = require("../models/partner");
+const Image = require("../models/image");
 const Chat = require("../models/chat");
 
 const { getReply } = require("../utils/openai");
+const { getIdleVideoURL } = require("../utils/d-id");
 
 const getImgURL = async (req, res) => {
   const userId = req.user._id;
@@ -69,7 +71,12 @@ const getIdleVideo = async (req, res) => {
     if (!partner) {
       res.status(404).json({ message: "Partner not found" });
     } else {
-      res.status(200).json({ videoURL: partner.videoURL });
+      const image = await Image.findById(partner.imageId);
+      if (!image.videoURL) {
+        image.videoURL = await getIdleVideoURL(image.videoId);
+        await image.save();
+      }
+      res.status(200).json({ videoURL: image.videoURL });
     }
   } catch (err) {
     console.log(err);
