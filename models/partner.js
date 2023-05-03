@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const { uploadImg } = require("../utils/imgur");
+const Image = require("./image");
 
 const PartnerSchema = mongoose.Schema({
   name: {
@@ -10,26 +11,26 @@ const PartnerSchema = mongoose.Schema({
   userId: {
     type: String,
     required: true,
+    unique: true,
   },
-  imgURL: {
+  imageId: {
     type: String,
-  },
-  imgBase64: {
-    type: String,
-  },
-  videoURL: {
-    type: String,
+    required: true,
+    unique: true,
   },
 });
 
 PartnerSchema.pre("save", async function (next) {
-  // only generate imgURL if it is null
-  if (this.imgURL) return next();
-  // generate imgURL
-  this.imgURL = await uploadImg(this.imgBase64);
   try {
+    const image = await Image.findById(this.imageId);
+    // if imgURL is not existing
+    if (!image.imgURL) {
+      image.imgURL = await uploadImg(image.imgBase64);
+      await image.save();
+    }
+    next();
   } catch (err) {
-    return next(err);
+    console.log(err);
   }
 });
 
