@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
-const { uploadImg } = require("../utils/imgur");
-
 const ImageSchema = mongoose.Schema({
   imgBase64: {
     type: String,
     required: true,
   },
   imgURL: {
+    type: String,
+  },
+  videoURL: {
     type: String,
   },
   // {Japanese | Korean | Chinese | European}
