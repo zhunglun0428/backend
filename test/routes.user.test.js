@@ -35,6 +35,7 @@ const usersForRegister = [
   },
 ];
 
+
 describe("POST /user/register", () => {
   for (let user of usersForRegister) {
     it("should return the expected response if user is created successfully or failed", async () => {
@@ -86,19 +87,27 @@ describe("POST /user/login", () => {
   });
 });
 
-/*
-describe("POST /user/partner", () => {
-  it("should return 201 and create a partner with idle video URL", async () => {
-    const res = await request(app)
-      .post("/user/partner")
-      .send({
-        imageId: "Test_Partner",
-        name: "645201ba7d6edb1ef9314867",
-      });
-    expect(res.status).to.equal(201);
-    expect(res.body.message).to.equal("Partner created");
-  });
-});
-*/
+const testPartner = {
+  name: "testPartner",
+};
 
+// describe("POST /user/partner", () => {
+//   it("should return 201 and create a partner with idle video URL", async () => {
+
+
+//     const partner = await Partner.findOne({ name: testPartner.name });
+//     const image = await Image.findOne({ imgBase64: partner.imageId });
+//     image.videoURL = "test-video-url";
+//     await image.save();
+
+//     const res = await request(app)
+//       .post("/user/partner")
+//       .send({
+//         imageId: "Test_Partner",
+//         name: "645201ba7d6edb1ef9314867",
+//       });
+//     expect(res.status).to.equal(201);
+//     expect(res.body.message).to.equal("Partner created");
+//   });
+// });
 

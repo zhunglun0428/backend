@@ -93,22 +93,25 @@ describe("GET /chat/idlevideo", () => {
 
   it("should return a video URL", async () => {
 
-  await request(app)
-    .post("/partner/create")
-    .send({"name": testPartner.name})
-    .set("authorization", jwtTokenForTest);
+    await request(app)
+      .post("/partner/create")
+      .send({"name": testPartner.name})
+      .set("authorization", jwtTokenForTest);
 
-  const partner = await Partner.findOne({ name: testPartner.name });
-  const image = await Image.findOne({ imgBase64: partner.imageId });
-  image.videoURL = "test-video-url";
-  await image.save();
+    const partner = await Partner.findOne({ name: testPartner.name });
+    const image = await Image.findOne({ imgBase64: partner.imageId });
+    image.videoURL = "test-video-url";
+    await image.save();
 
-  const res = await request(app)
-    .get("/chat/idleVideo")
-    .set("authorization", jwtTokenForTest);
-    console.log("res",res);
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("videoURL", "test-video-url");
+    const res = await request(app)
+      .get("/chat/idleVideo")
+      .set("authorization", jwtTokenForTest);
+      console.log("res",res);
+      expect(res.status).to.equal(200);
+      expect(res.body).to.have.property("videoURL", "test-video-url");
+
+    await Partner.findOneAndDelete({ name: testPartner.name });
+    await Image.findOneAndDelete({ imgBase64: partner.imageId });
 
   });
 
