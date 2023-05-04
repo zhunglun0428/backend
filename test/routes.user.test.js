@@ -76,8 +76,29 @@ describe("POST /user/login", () => {
   it("should return 200 and JWT on successful login", async () => {
     const res = await request(app)
       .post("/user/login")
-      .send({ username: testUser.username, password: testUser.password });
+      .send({
+        username: testUser.username,
+        password: testUser.password
+      })
+      .set("authorization", jwtTokenForTest);
     expect(res.status).to.equal(200);
     expect(res.body).to.have.property("authorization");
   });
 });
+
+/*
+describe("POST /user/partner", () => {
+  it("should return 201 and create a partner with idle video URL", async () => {
+    const res = await request(app)
+      .post("/user/partner")
+      .send({
+        imageId: "Test_Partner",
+        name: "645201ba7d6edb1ef9314867",
+      });
+    expect(res.status).to.equal(201);
+    expect(res.body.message).to.equal("Partner created");
+  });
+});
+*/
+
+

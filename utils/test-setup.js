@@ -26,6 +26,7 @@ before(async () => {
     .send({ username: testUser.username, password: testUser.password });
   jwtTokenForTest = credentials_response.body.authorization
 
+
 });
 
 after(async () => {

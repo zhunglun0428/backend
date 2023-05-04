@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
+    "store-image": "NODE_ENV=development node scripts/storeImage.js public/images",
     "test": "NODE_ENV=development mocha ./test --exit --recursive --timeout 5000"
   },
   "dependencies": {

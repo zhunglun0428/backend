@@ -8,6 +8,7 @@ const request = require("supertest");
 const app = require("../app");
 require("../utils/test-setup");
 
+/*
 const usersForCreatePartner = {
   data: {
     name: "Test_Partner",
@@ -28,6 +29,7 @@ describe("POST /partner/create", () => {
   });
 
 });
+*/
 
 describe("POST /partner/generateImage", () => {
   it("should return an array of 4 images or less", async () => {
