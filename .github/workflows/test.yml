@@ -29,5 +29,4 @@ jobs:
         echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
         echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
     - run: npm ci
-    - run: npm store-image
     - run: npm test

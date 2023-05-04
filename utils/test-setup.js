@@ -5,11 +5,17 @@ const request = require("supertest");
 const app = require("../app");
 var mongoose = require("mongoose");
 const User = require("../models/user");
+const Partner = require("../models/partner");
+
 
 const testUser = {
   username: "testUser",
   password: "testpassword",
   email: "testUser@example.com"
+};
+
+const testPartner = {
+  name: "testPartner",
 };
 
 global.jwtTokenForTest;
@@ -30,7 +36,6 @@ before(async () => {
 });
 
 after(async () => {
-  await User.findOneAndDelete({ username: testUser.username });
   await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
 });
