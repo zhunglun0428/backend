@@ -77,7 +77,8 @@ const getIdleVideo = async (req, res) => {
       const image = await Image.findOne({ imgBase64: partner.imageId });
       if (!image) {
         res.status(404).json({ message: "You haven't chosen partner yet" });
-      } else if (!image.videoURL) {
+      }
+      if (!image.videoURL) {
         image.videoURL = await getIdleVideoURL(image.videoId);
         await image.save();
       }
