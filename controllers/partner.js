@@ -18,9 +18,9 @@ const createPartner = async (req, res) => {
       })
       .toString();
     const newPartner = new Partner({
-      name,
-      imgBase64,
-      userId,
+      name: name,
+      userId: userId,
+      imageId: imgBase64,
     });
     await newPartner.save();
     res.status(201).json({ message: "Partner created" });

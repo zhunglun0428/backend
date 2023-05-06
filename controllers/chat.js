@@ -1,17 +1,21 @@
 const Partner = require("../models/partner");
+const Image = require("../models/image");
 const Chat = require("../models/chat");
 
 const { getReply } = require("../utils/openai");
+const { getIdleVideoURL } = require("../utils/d-id");
 
 const getImgURL = async (req, res) => {
   const userId = req.user._id;
 
   try {
     const partner = await Partner.findOne({ userId: userId });
+
     if (!partner) {
       res.status(404).json({ message: "Partner not found" });
     } else {
-      res.status(200).json({ imgURL: partner.imgURL });
+      const partnerImgURL = await Image.findOne({ imgBase64: partner.imageId });
+      res.status(200).json({ imgURL: partnerImgURL.imgURL });
     }
   } catch (err) {
     console.log(err);
@@ -61,4 +65,26 @@ const replyMessage = async (req, res) => {
   }
 };
 
-module.exports = { getImgURL, replyMessage };
+const getIdleVideo = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const partner = await Partner.findOne({ userId: userId });
+
+    if (!partner) {
+      res.status(404).json({ message: "Partner not found" });
+    } else {
+      const image = await Image.findOne({ imgBase64: partner.imageId });
+      if (!image.videoURL) {
+        image.videoURL = await getIdleVideoURL(image.videoId);
+        await image.save();
+      }
+      res.status(200).json({ videoURL: image.videoURL });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { getImgURL, replyMessage, getIdleVideo };

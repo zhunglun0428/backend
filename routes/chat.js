@@ -6,5 +6,6 @@ const chatController = require("../controllers/chat");
 
 router.get("/imageURL", auth, chatController.getImgURL);
 router.post("/replyMessage", auth, chatController.replyMessage);
+router.get("/idleVideo", auth, chatController.getIdleVideo);
 
 module.exports = router;
