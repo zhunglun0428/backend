@@ -14,8 +14,10 @@ const getImgURL = async (req, res) => {
     if (!partner) {
       res.status(404).json({ message: "Partner not found" });
     } else {
-      const partnerImgURL = await Image.findOne({ imgBase64: partner.imageId });
-      res.status(200).json({ imgURL: partnerImgURL.imgURL });
+      console.log(partner.imageId);
+      const image = await Image.findOne({ _id: partner.imageId });
+      console.log(image);
+      res.status(200).json({ imgURL: image.imgURL });
     }
   } catch (err) {
     console.log(err);
@@ -74,7 +76,7 @@ const getIdleVideo = async (req, res) => {
     if (!partner) {
       res.status(404).json({ message: "Partner not found" });
     } else {
-      const image = await Image.findOne({ imgBase64: partner.imageId });
+      const image = await Image.findOne({ _id: partner.imageId });
       if (!image) {
         res.status(404).json({ message: "You haven't chosen partner yet" });
       }
