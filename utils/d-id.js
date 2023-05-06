@@ -1,5 +1,8 @@
 require("dotenv").config();
 
+if(process.env.NODE_ENV === "development"){
+  const fetch = require("node-fetch");
+}
 // for test
 const getCredit = async () => {
   const options = {
@@ -53,6 +56,8 @@ const getIdleVideoURL = async (videoId) => {
       authorization: `Basic ${process.env.DID_API_KEY}`,
     },
   };
+
+
   const res = await fetch(`${process.env.DID_URL}/talks/${videoId}`, options);
   if (!res.ok) {
     throw new Error("Failed to get idle video URL");
