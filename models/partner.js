@@ -18,6 +18,21 @@ const PartnerSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
+  nickname:{
+    type: String,
+  },
+  name:{
+    type: String,
+  },
+  MBTI:{
+    type: String,
+  },
+  job:{
+    type: String,
+  },
+  personality:{
+    type: String,
+  },
 });
 
 PartnerSchema.pre("save", async function (next) {

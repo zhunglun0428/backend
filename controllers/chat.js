@@ -7,14 +7,12 @@ const { getIdleVideoURL } = require("../utils/d-id");
 
 const getImgURL = async (req, res) => {
   const userId = req.user._id;
-
   try {
     const partner = await Partner.findOne({ userId: userId });
 
     if (!partner) {
       res.status(404).json({ message: "Partner not found" });
     } else {
-      console.log(partner.imageId);
       const image = await Image.findOne({ _id: partner.imageId });
       console.log(image);
       res.status(200).json({ imgURL: image.imgURL });
