@@ -77,6 +77,7 @@ const getIdleVideo = async (req, res) => {
       res.status(404).json({ message: "Partner not found" });
     } else {
       const image = await Image.findOne({ _id: partner.imageId });
+      console.log("image: ", image)
       if (!image) {
         res.status(404).json({ message: "You haven't chosen partner yet" });
       }
