@@ -5,8 +5,7 @@ const request = require("supertest");
 const app = require("../app");
 var mongoose = require("mongoose");
 const User = require("../models/user");
-const Partner = require("../models/partner");
-
+const Image = require("../models/image");
 
 const testUser = {
   username: "testUser",
@@ -14,9 +13,6 @@ const testUser = {
   email: "testUser@example.com"
 };
 
-const testPartner = {
-  name: "testPartner",
-};
 
 global.jwtTokenForTest;
 
@@ -25,6 +21,15 @@ before(async () => {
   // register a new user
   await User.findOneAndDelete({ username: testUser.username });
   await User.create(testUser);
+  testImage = new Image({
+        imgBase64: "1111",
+        glasses: true,
+        breast: "large breast",
+        hairColor: "red",
+        hair: "straight",
+        origin: "Japanese",
+      });
+  await testImage.save();
 
   // log in with the user"s credentials to get a JWT token
   const credentials_response = await request(app)

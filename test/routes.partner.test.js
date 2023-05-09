@@ -19,20 +19,20 @@ const usersForCreatePartner = {
   expectedMessage: "Partner created"
 };
 
-// describe("POST /partner/create", () => {
+describe("POST /partner/create", () => {
 
-//   it("should create a new partner", async () => {
-//     const response = await request(app)
-//       .post("/partner/create")
-//       .send({"name": usersForCreatePartner.data.name})
-//       .set("authorization", jwtTokenForTest);
-//       expect(response.status).to.equal(usersForCreatePartner.expectedStatus);
-//       expect(response.body.message).to.equal(usersForCreatePartner.expectedMessage);
+  it("should create a new partner", async () => {
+    const response = await request(app)
+      .post("/partner/create")
+      .send({"name": usersForCreatePartner.data.name})
+      .set("authorization", jwtTokenForTest);
+      expect(response.status).to.equal(usersForCreatePartner.expectedStatus);
+      expect(response.body.message).to.equal(usersForCreatePartner.expectedMessage);
 
-//     await Partner.findOneAndDelete({ name: usersForCreatePartner.name });
-//   });
+    await Partner.findOneAndDelete({ name: usersForCreatePartner.name });
+  });
 
-// });
+});
 
 
 describe("POST /partner/generateImage", () => {
