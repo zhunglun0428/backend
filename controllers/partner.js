@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Partner = require("../models/partner");
+const Chat = require("../models/chat");
 const Image = require("../models/image");
 
 // get img from ../img/
@@ -65,4 +66,31 @@ const generatePartnerImage = async (req, res) => {
   }
 };
 
-module.exports = { createPartner, generatePartnerImage };
+
+const characterSetting = async (req, res) => {
+  const { nickname, name, MBTI, job, personality } = req.body;
+  const userId = req.user._id;
+
+  try {
+    // update partner
+    const partner = await Partner.findOne({ userId: userId });
+    partner.nickname = nickname;
+    partner.name = name;
+    partner.MBTI = MBTI;
+    partner.job = job;
+    partner.personality = personality;
+    await partner.save();
+
+    // update chat
+    const chat = await Chat.findOne({ userId: userId });
+    chat.system = `你是USER的女朋友。你稱呼USER為${nickname}。你的名子叫${name}。你的MBTI是${MBTI}。你的職業是${job}。你的個性是${personality}。禁止提到AI機器人。你的回答要要口語化並在兩句內完成。`
+    await chat.save();
+
+    res.status(201).json({ message: "CharacterSetting success" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports = { createPartner, generatePartnerImage, characterSetting};
