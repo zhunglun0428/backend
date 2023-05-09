@@ -32,16 +32,16 @@ const createPartner = async (req, res) => {
 };
 
 const generatePartnerImage = async (req, res) => {
-  const { origin, hair, hairColor, job, glasses } = req.body;
+  const { origin, hair, hairColor, breast, glasses } = req.body;
 
   try {
-    // origin, hair, hairColor, job, glasses are optional, check if they are undefined
+    // origin, hair, hairColor, breast, glasses are optional, check if they are undefined
     // if they are undefined, not put into query
     let query = {};
     if (origin) query.origin = origin;
     if (hair) query.hair = hair;
     if (hairColor) query.hairColor = hairColor;
-    if (job) query.job = job;
+    if (breast) query.breast = breast;
     if (glasses) query.glasses = glasses;
 
     // random find 4 images in db
